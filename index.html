@@ -29,7 +29,7 @@ nav ul li a:hover { color:#ff3c00; }
 .section-landing .hero-content p { font-size:1.3rem; margin-bottom:20px; text-shadow: 1px 1px 6px rgba(0,0,0,0.7); }
 
 /* BOTÃO */
-.btn { padding:12px 30px; border:none; border-radius:5px; cursor:pointer; font-size:1rem; transition:0.3s; background:linear-gradient(45deg,#ff3c00,#ff8a00); background-size:200% 200%; animation:gradientShift 3s ease infinite; color:#fff; display:inline-block; box-shadow: 0 5px 15px rgba(255,60,0,0.5); }
+.btn { padding:12px 30px; border:none; border-radius:5px; cursor:pointer; font-size:1rem; transition:0.3s; background:linear-gradient(45deg,#ff3c00,#ff8a00); background-size:200% 200%; animation:gradientShift 3s ease infinite; color:#fff; display:inline-block; box-shadow: 0 5px 15px rgba(255,60,0,0.5); text-decoration:none; }
 .btn:hover { transform:scale(1.05); box-shadow: 0 8px 20px rgba(255,60,0,0.7); }
 
 /* SEÇÃO 2 - INGRESSOS */
@@ -49,7 +49,7 @@ nav ul li a:hover { color:#ff3c00; }
 .ticket-card img { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:0; opacity:0.3; }
 .ticket-card h3 { margin-bottom:10px; color:#ff3c00; position:relative; z-index:1; }
 .ticket-card p { margin-bottom:15px; position:relative; z-index:1; }
-.ticket-card a { display:inline-block; background:#ff6600; padding:10px 20px; border-radius:5px; color:#fff; transition:0.3s; position:relative; z-index:1; }
+.ticket-card a { display:inline-block; background:#ff6600; padding:10px 20px; border-radius:5px; color:#fff; transition:0.3s; position:relative; z-index:1; text-decoration:none; }
 .ticket-card a:hover { background:#ff3300; }
 
 /* FOOTER */
@@ -92,7 +92,6 @@ footer { background:#000; text-align:center; padding:20px; margin-top:40px; }
 <!-- SEÇÃO 1 - LANDING -->
 <section class="section-landing">
   <img class="banner-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7HpYaiYkqJfBBYhFTKeag_WDUkY-l65ZQVA&s" alt="Banner do Evento">
-
   <div class="hero-content">
     <h1>HOSTED BY TRAVIS SCOTT</h1>
     <p>Uma noite inesquecível para você!</p>
@@ -108,6 +107,7 @@ footer { background:#000; text-align:center; padding:20px; margin-top:40px; }
     <p>🔞 Classificação: +18</p>
     <p>🗓️ 06 de Setembro às 22:00</p>
     <p>📍 Av. Francisco Matarazzo, 694 – São Paulo</p>
+    <p>📌 AUDIO</p>
   </div>
 
   <h2>Ingressos</h2>
@@ -116,19 +116,19 @@ footer { background:#000; text-align:center; padding:20px; margin-top:40px; }
       <img src="IMAGEM-EARLYBIRD.jpg" alt="Early Bird">
       <h3>EARLY BIRD</h3>
       <p>R$ 350,00 (sem taxa)</p>
-      <a href="#" class="btn open-modal" data-checkout="https://seusite.com/checkout-earlybird">Comprar</a>
+      <a href="#" class="btn open-modal" data-checkout="https://perfectpay.com/checkout/earlybird">Comprar</a>
     </div>
     <div class="ticket-card">
       <img src="IMAGEM-GERAL.jpg" alt="Geral">
       <h3>GERAL</h3>
       <p>R$ 575,00 (sem taxa)</p>
-      <a href="#" class="btn open-modal" data-checkout="https://seusite.com/checkout-geral">Comprar</a>
+      <a href="#" class="btn open-modal" data-checkout="https://perfectpay.com/checkout/geral">Comprar</a>
     </div>
     <div class="ticket-card">
       <img src="IMAGEM-VIP.jpg" alt="VIP">
       <h3>VIP</h3>
       <p>R$ 1.150,00 (sem taxa)</p>
-      <a href="#" class="btn open-modal" data-checkout="https://seusite.com/checkout-vip">Comprar</a>
+      <a href="#" class="btn open-modal" data-checkout="https://perfectpay.com/checkout/vip">Comprar</a>
     </div>
   </div>
 </section>
@@ -231,7 +231,6 @@ confirmBtn.addEventListener('click', ()=>{
   const cpf = document.getElementById('cpf').value.trim();
   const email = document.getElementById('email').value.trim();
   if(nome && cpf && email){
-    // Aqui você pode enviar os dados para seu servidor se quiser
     window.location.href = checkoutURL;
   } else {
     alert("Por favor, preencha todos os campos!");
