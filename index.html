@@ -9,6 +9,9 @@
 * { margin:0; padding:0; box-sizing:border-box; font-family: Arial, sans-serif; }
 body { background:#000; color:#fff; overflow-x:hidden; position:relative; }
 
+/* PARTICLES (BOLINHAS) */
+#particles { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; }
+
 /* HEADER */
 header { position:fixed; top:0; width:100%; z-index:1000; padding:20px 40px; display:flex; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.7); transition:0.3s; }
 header h1 { font-size:1.8rem; }
@@ -16,31 +19,24 @@ nav ul { display:flex; list-style:none; gap:20px; }
 nav ul li a { color:#fff; transition:0.3s; }
 nav ul li a:hover { color:#ff3c00; }
 
-/* BANNER RESPONSIVO SEM CORTES */
-.banner-container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 100px auto 40px; /* espaço abaixo do header */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-}
-
-.banner-container img.banner-img {
-  width: 100%;
-  height: auto;
-  object-fit: contain; /* mantém a imagem inteira */
-  object-position: center;
-  display: block;
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-}
-
 /* HERO */
-.hero { position:relative; height:90vh; display:flex; justify-content:center; align-items:center; text-align:center; overflow:hidden; margin-top:20px; }
+.hero { position:relative; height:90vh; display:flex; justify-content:center; align-items:center; text-align:center; overflow:hidden; }
 .hero video { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:100%; height:100%; object-fit:cover; z-index:0; filter:brightness(0.5); }
-.hero-content { position:relative; z-index:2; animation:fadeInUp 1s ease forwards; }
+
+/* BANNER AJUSTADO */
+.hero .banner-img {
+  position:absolute;
+  top:0;
+  width:100%;
+  height:auto;
+  max-height:250px; /* altura máxima do banner */
+  object-fit:contain; /* mantém proporção completa */
+  object-position:center;
+  z-index:1;
+}
+
+/* CONTEÚDO HERO */
+.hero-content { position:relative; z-index:2; animation:fadeInUp 1s ease forwards; margin-top:260px; }
 .hero-content h1 { font-size:3rem; margin-bottom:20px; text-shadow: 2px 2px 8px rgba(0,0,0,0.7); }
 .hero-content p { font-size:1.3rem; margin-bottom:30px; text-shadow: 1px 1px 5px rgba(0,0,0,0.6); }
 
@@ -80,12 +76,14 @@ footer { background:#000; text-align:center; padding:20px; margin-top:40px; }
   nav ul{flex-direction:column; gap:10px;}
   .hero-content h1{font-size:2rem;}
   .hero-content p{font-size:1rem;}
-  .tickets{grid-template-columns:1fr;}
-  .banner-container { margin:80px auto 30px; }
+  .hero-content { margin-top:220px; }
 }
 </style>
 </head>
 <body>
+
+<!-- PARTICLES -->
+<canvas id="particles"></canvas>
 
 <!-- HEADER -->
 <header>
@@ -98,14 +96,13 @@ footer { background:#000; text-align:center; padding:20px; margin-top:40px; }
   </nav>
 </header>
 
-<!-- BANNER SEM CORTES -->
-<div class="banner-container">
-  <img class="banner-img" src="https://external.fssz1-1.fna.fbcdn.net/emg1/v/t13/1109076512466778545?url=https%3A%2F%2Fkraken.ingresse.com%2Fevent%2Fposters%2F85448%2Flarge%2F1756773495.0114448.jpg&fb_obo=1&utld=ingresse.com&stp=c0.5000x0.5000f_dst-emg0_p480x251_q75_tt6&_nc_gid=zL7ywkRe-BIvXXIsfD8vCg&_nc_oc=Adl0HRC0DmvPBoHGna2VShH7fsw-Z-qtu_H-r77Uoeb6mkLu9S0NdN6S-XNnyZw8J1A&ccb=13-1&oh=06_Q3-2AeSufiEfe-7xjjHSVB6I9djBO3c1r-E6L5nF-X0JasnO&oe=68B950A6&_nc_sid=c24604" alt="Banner do Evento">
-</div>
-
 <!-- HERO -->
 <section class="hero">
   <video src="VIDEO-HERO.mp4" autoplay muted loop></video>
+  
+  <!-- BANNER AJUSTADO -->
+  <img class="banner-img" src="https://external.fssz1-1.fna.fbcdn.net/emg1/v/t13/1109076512466778545?url=https%3A%2F%2Fkraken.ingresse.com%2Fevent%2Fposters%2F85448%2Flarge%2F1756773495.0114448.jpg&fb_obo=1&utld=ingresse.com&stp=c0.5000x0.5000f_dst-emg0_p480x251_q75_tt6&_nc_gid=zL7ywkRe-BIvXXIsfD8vCg&_nc_oc=Adl0HRC0DmvPBoHGna2VShH7fsw-Z-qtu_H-r77Uoeb6mkLu9S0NdN6S-XNnyZw8J1A&ccb=13-1&oh=06_Q3-2AeSufiEfe-7xjjHSVB6I9djBO3c1r-E6L5nF-X0JasnO&oe=68B950A6&_nc_sid=c24604" alt="Banner do Evento">
+
   <div class="hero-content">
     <h1>Hosted by Travis Scott</h1>
     <p>06 de setembro de 2025 - 22h | AUDIO CLUB - São Paulo, SP</p>
@@ -148,6 +145,82 @@ footer { background:#000; text-align:center; padding:20px; margin-top:40px; }
 <footer>
   <p>© 2025 After Party - Todos os direitos reservados.</p>
 </footer>
+
+<!-- JS -->
+<script>
+// FADE-IN SECTIONS
+const sections = document.querySelectorAll('section');
+function revealOnScroll() {
+  const triggerBottom = window.innerHeight * 0.85;
+  sections.forEach(section => {
+    if(section.getBoundingClientRect().top < triggerBottom){
+      section.classList.add('visible');
+    }
+  });
+}
+window.addEventListener('scroll', revealOnScroll);
+window.addEventListener('load', revealOnScroll);
+
+// SCROLL SUAVE
+document.querySelectorAll('nav ul li a').forEach(link=>{
+  link.addEventListener('click',e=>{
+    e.preventDefault();
+    document.querySelector(link.getAttribute('href')).scrollIntoView({behavior:'smooth'});
+  });
+});
+
+// PARTICLES BOLINHAS
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let w=canvas.width=window.innerWidth;
+let h=canvas.height=window.innerHeight;
+const particlesArray=[];
+
+class Particle{
+  constructor(){
+    this.x = Math.random()*w;
+    this.y = Math.random()*h;
+    this.radius = Math.random()*3+1;
+    this.speedX = (Math.random()-0.5)*1.5;
+    this.speedY = (Math.random()-0.5)*1.5;
+  }
+  update(){
+    this.x += this.speedX;
+    this.y += this.speedY;
+    if(this.x<0 || this.x>w) this.speedX*=-1;
+    if(this.y<0 || this.y>h) this.speedY*=-1;
+  }
+  draw(){
+    ctx.fillStyle='rgba(255,255,255,0.7)';
+    ctx.beginPath();
+    ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);
+    ctx.fill();
+  }
+}
+
+function initParticles(num){
+  for(let i=0;i<num;i++){
+    particlesArray.push(new Particle());
+  }
+}
+
+function animate(){
+  ctx.clearRect(0,0,w,h);
+  particlesArray.forEach(p=>{
+    p.update();
+    p.draw();
+  });
+  requestAnimationFrame(animate);
+}
+
+initParticles(100);
+animate();
+
+window.addEventListener('resize',()=>{
+  w=canvas.width=window.innerWidth;
+  h=canvas.height=window.innerHeight;
+});
+</script>
 
 </body>
 </html>
