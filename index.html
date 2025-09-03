@@ -7,10 +7,10 @@
 <style>
 /* RESET */
 * { margin:0; padding:0; box-sizing:border-box; font-family: Arial, sans-serif; }
-body { background:#000; color:#fff; overflow-x:hidden; position:relative; }
+body { background:#000; color:#fff; overflow-x:hidden; position:relative; scroll-behavior: smooth; }
 
 /* PARTICLES (BOLINHAS) */
-#particles { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; }
+#particles { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; opacity:0; transition: opacity 2s ease; }
 
 /* HEADER */
 header { position:fixed; top:0; width:100%; z-index:1000; padding:20px 40px; display:flex; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.7); transition:0.3s; }
@@ -19,10 +19,10 @@ nav ul { display:flex; list-style:none; gap:20px; }
 nav ul li a { color:#fff; transition:0.3s; }
 nav ul li a:hover { color:#ff3c00; }
 
-/* HERO */
-.hero {
+/* SEÇÃO 1 - LANDING */
+.section-landing {
   position: relative;
-  min-height: 90vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -31,25 +31,11 @@ nav ul li a:hover { color:#ff3c00; }
   overflow: hidden;
 }
 
-.hero video {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 0;
-  filter: brightness(0.35); /* escurece o fundo para destacar o banner */
-}
-
-/* BANNER PREMIUM */
-.hero .banner-img {
-  position: relative;
+/* BANNER PRINCIPAL */
+.section-landing .banner-img {
   display: block;
-  margin: 0 auto 25px auto;
   max-width: 90%;
-  max-height: 380px;
+  max-height: 400px;
   width: auto;
   height: auto;
   object-fit: contain;
@@ -58,49 +44,57 @@ nav ul li a:hover { color:#ff3c00; }
   box-shadow: 0 10px 30px rgba(0,0,0,0.7);
   z-index: 2;
   transition: transform 0.5s ease, box-shadow 0.5s ease;
+  opacity:0;
+  transform: translateY(-30px);
+  animation: bannerFadeIn 1.5s forwards 0.5s;
 }
-.hero .banner-img:hover {
+.section-landing .banner-img:hover {
   transform: scale(1.03);
   box-shadow: 0 15px 40px rgba(0,0,0,0.8);
 }
 
-/* OVERLAY DE GRADIENTE ATRÁS DO TEXTO */
-.hero::after {
+/* OVERLAY ESCURO */
+.section-landing::after {
   content:"";
   position:absolute;
   top:0; left:0;
   width:100%; height:100%;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.7));
+  background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.7));
   z-index:1;
   pointer-events:none;
   backdrop-filter: blur(2px);
-  border-radius:0;
 }
 
-/* CONTEÚDO HERO */
-.hero-content {
+/* CONTEÚDO DO BANNER */
+.section-landing .hero-content {
   position: relative;
   z-index: 3;
-  animation: fadeInUp 1s ease forwards;
   padding: 20px;
   backdrop-filter: blur(3px);
   background: rgba(0,0,0,0.25);
   border-radius: 12px;
   box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+  opacity:0;
+  transform: translateY(20px);
+  animation: heroFadeIn 1s forwards 1.2s;
 }
-.hero-content h1 { font-size:3rem; margin-bottom:15px; text-shadow: 2px 2px 12px rgba(0,0,0,0.8); }
-.hero-content p { font-size:1.3rem; margin-bottom:20px; text-shadow: 1px 1px 6px rgba(0,0,0,0.7); }
+.section-landing .hero-content h1 { font-size:3rem; margin-bottom:15px; text-shadow: 2px 2px 12px rgba(0,0,0,0.8); }
+.section-landing .hero-content p { font-size:1.3rem; margin-bottom:20px; text-shadow: 1px 1px 6px rgba(0,0,0,0.7); }
 
 /* BOTÃO */
 .btn { padding:12px 30px; border:none; border-radius:5px; cursor:pointer; font-size:1rem; transition:0.3s; background:linear-gradient(45deg,#ff3c00,#ff8a00); background-size:200% 200%; animation:gradientShift 3s ease infinite; color:#fff; display:inline-block; box-shadow: 0 5px 15px rgba(255,60,0,0.5); }
 .btn:hover { transform:scale(1.05); box-shadow: 0 8px 20px rgba(255,60,0,0.7); }
 
-/* SECTIONS */
-section { padding:100px 40px 60px; max-width:1200px; margin:0 auto; }
-section h2 { font-size:2rem; margin-bottom:20px; opacity:0; transform:translateY(50px); transition:0.8s; }
-section.visible h2 { opacity:1; transform:translateY(0); }
-section p { margin-bottom:15px; opacity:0; transform:translateY(30px); transition:0.8s; }
-section.visible p { opacity:1; transform:translateY(0); }
+/* SEÇÃO 2 - INGRESSOS */
+.section-tickets { padding:100px 40px 60px; max-width:1200px; margin:0 auto; }
+.section-tickets h2 { font-size:2rem; margin-bottom:20px; opacity:0; transform:translateY(50px); transition:0.8s; }
+.section-tickets.visible h2 { opacity:1; transform:translateY(0); }
+.section-tickets p { margin-bottom:15px; opacity:0; transform:translateY(30px); transition:0.8s; }
+.section-tickets.visible p { opacity:1; transform:translateY(0); }
+
+/* DETALHES DO EVENTO */
+.event-details { margin-bottom:50px; text-align:center; line-height:1.6; font-size:1.2rem; }
+.event-details p { margin:8px 0; }
 
 /* TICKETS */
 .tickets { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:20px; margin-top:40px; }
@@ -117,6 +111,8 @@ footer { background:#000; text-align:center; padding:20px; margin-top:40px; }
 /* ANIMAÇÕES */
 @keyframes gradientShift { 0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%} }
 @keyframes fadeInUp { from{opacity:0; transform:translateY(50px);} to{opacity:1; transform:translateY(0);} }
+@keyframes bannerFadeIn { to { opacity:1; transform: translateY(0); } }
+@keyframes heroFadeIn { to { opacity:1; transform: translateY(0); } }
 
 /* RESPONSIVE */
 @media(max-width:1024px){
@@ -140,34 +136,32 @@ footer { background:#000; text-align:center; padding:20px; margin-top:40px; }
   <h1>After Party</h1>
   <nav>
     <ul>
-      <li><a href="#details">Detalhes</a></li>
-      <li><a href="#tickets">Ingressos</a></li>
+      <li><a href="#section-tickets">Ingressos</a></li>
     </ul>
   </nav>
 </header>
 
-<!-- HERO -->
-<section class="hero">
-  <video src="VIDEO-HERO.mp4" autoplay muted loop></video>
-  
-  <!-- BANNER PREMIUM -->
+<!-- SEÇÃO 1 - LANDING -->
+<section class="section-landing">
   <img class="banner-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7HpYaiYkqJfBBYhFTKeag_WDUkY-l65ZQVA&s" alt="Banner do Evento">
 
   <div class="hero-content">
-    <h1>Hosted by Travis Scott</h1>
-    <p>06 de setembro de 2025 - 22h | AUDIO CLUB - São Paulo, SP</p>
-    <a href="#tickets" class="btn">Comprar Ingressos</a>
+    <h1>HOSTED BY TRAVIS SCOTT</h1>
+    <p>Uma noite inesquecível para você!</p>
+    <a href="#section-tickets" class="btn">COMPRE O SEU INGRESSO</a>
   </div>
 </section>
 
-<!-- DETALHES -->
-<section id="details">
-  <h2>Detalhes do Evento</h2>
-  <p>Prepare-se para uma noite inesquecível com música, dança e muita energia!</p>
-</section>
+<!-- SEÇÃO 2 - INGRESSOS E DETALHES -->
+<section class="section-tickets" id="section-tickets">
+  <h2>DETALHES DO EVENTO</h2>
+  <div class="event-details">
+    <p>Prepare-se para uma noite inesquecível com música, dança e muita energia!</p>
+    <p>🔞 Classificação: +18</p>
+    <p>🗓️ 06 de Setembro às 22:00</p>
+    <p>📍 Av. Francisco Matarazzo, 694 – São Paulo</p>
+  </div>
 
-<!-- INGRESSOS -->
-<section id="tickets">
   <h2>Ingressos</h2>
   <div class="tickets">
     <div class="ticket-card">
@@ -211,15 +205,7 @@ function revealOnScroll() {
 window.addEventListener('scroll', revealOnScroll);
 window.addEventListener('load', revealOnScroll);
 
-// SCROLL SUAVE
-document.querySelectorAll('nav ul li a').forEach(link=>{
-  link.addEventListener('click',e=>{
-    e.preventDefault();
-    document.querySelector(link.getAttribute('href')).scrollIntoView({behavior:'smooth'});
-  });
-});
-
-// PARTICLES BOLINHAS
+// PARTICLES
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 let w=canvas.width=window.innerWidth;
@@ -233,6 +219,7 @@ class Particle{
     this.radius = Math.random()*3+1;
     this.speedX = (Math.random()-0.5)*1.5;
     this.speedY = (Math.random()-0.5)*1.5;
+    this.opacity = Math.random();
   }
   update(){
     this.x += this.speedX;
@@ -241,7 +228,7 @@ class Particle{
     if(this.y<0 || this.y>h) this.speedY*=-1;
   }
   draw(){
-    ctx.fillStyle='rgba(255,255,255,0.7)';
+    ctx.fillStyle=`rgba(255,255,255,${this.opacity})`;
     ctx.beginPath();
     ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);
     ctx.fill();
@@ -253,7 +240,6 @@ function initParticles(num){
     particlesArray.push(new Particle());
   }
 }
-
 function animate(){
   ctx.clearRect(0,0,w,h);
   particlesArray.forEach(p=>{
@@ -262,8 +248,13 @@ function animate(){
   });
   requestAnimationFrame(animate);
 }
+initParticles(120);
 
-initParticles(100);
+// Fade-in das bolinhas
+window.addEventListener('load', ()=>{
+  document.getElementById('particles').style.opacity = 1;
+});
+
 animate();
 
 window.addEventListener('resize',()=>{
@@ -271,6 +262,5 @@ window.addEventListener('resize',()=>{
   h=canvas.height=window.innerHeight;
 });
 </script>
-
 </body>
 </html>
